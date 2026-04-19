@@ -1,0 +1,110 @@
+.app {
+  position: relative;
+  min-height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1.5rem 4rem;
+}
+
+/* Background orbs */
+.bgOrb1,
+.bgOrb2 {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bgOrb1 {
+  width: 500px;
+  height: 500px;
+  background: #1db954;
+  background: oklch(68% 0.17 149 / 15%);
+  top: -150px;
+  left: -100px;
+}
+
+.bgOrb2 {
+  width: 400px;
+  height: 400px;
+  background: #1db954;
+  background: oklch(68% 0.17 149 / 10%);
+  bottom: -100px;
+  right: -80px;
+}
+
+/* Header */
+.header {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.logo {
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+
+.logoAccent {
+  color: var(--color-accent);
+}
+
+.tagline {
+  margin-top: 0.4rem;
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+}
+
+/* Main */
+.main {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.searchSection {
+  display: flex;
+  justify-content: center;
+}
+
+/* Columns */
+.columns {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.panel {
+  flex: 1;
+  min-width: 0;
+}
+
+.divider {
+  width: 1px;
+  align-self: stretch;
+  background-color: var(--color-border);
+  flex-shrink: 0;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .columns {
+    flex-direction: column;
+  }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    align-self: auto;
+  }
+}
