@@ -58,7 +58,7 @@ function App() {
 
       <header className={styles.header}>
         <div className={styles.logo}>
-          <span className={styles.logoAccent}>Ja</span>mmming
+          <span className={styles.logoAccent}>Jam</span>mming
         </div>
         <p className={styles.tagline}>Build your perfect playlist</p>
       </header>

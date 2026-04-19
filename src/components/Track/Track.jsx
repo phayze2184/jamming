@@ -1,24 +1,17 @@
-// 1. Imports
-import { useState } from 'react';
 import styles from './Track.module.css';
- 
-// 2. Component function
-function Track({ prop1, prop2 }) {
- 
-  // 3. State declarations
-  const [value, setValue] = useState('');
- 
-  // 4. Derived values / computed variables
- 
-  // 5. Event handlers
- 
-  // 6. Return — JSX only, no logic
+
+function Track({ track, actionLabel, onAction }) {
   return (
-    <div className={styles.wrapper}>
-      ...
+    <div className={styles.track}>
+      <div className={styles.info}>
+        <span className={styles.name}>{track.name}</span>
+        <span className={styles.meta}>{track.artist} · {track.album}</span>
+      </div>
+      <button className={styles.action} onClick={() => onAction(track)} aria-label={actionLabel}>
+        {actionLabel}
+      </button>
     </div>
   );
 }
- 
-// 7. Default export
+
 export default Track;

@@ -1,24 +1,16 @@
-// 1. Imports
-import { useState } from 'react';
+import Track from '../Track/Track';
 import styles from './Tracklist.module.css';
- 
-// 2. Component function
-function Tracklist({ prop1, prop2 }) {
- 
-  // 3. State declarations
-  const [value, setValue] = useState('');
- 
-  // 4. Derived values / computed variables
- 
-  // 5. Event handlers
- 
-  // 6. Return — JSX only, no logic
+
+function Tracklist({ tracks, actionLabel, onTrackAction }) {
   return (
-    <div className={styles.wrapper}>
-      ...
-    </div>
+    <ul className={styles.list}>
+      {tracks.map(track => (
+        <li key={track.id}>
+          <Track track={track} actionLabel={actionLabel} onAction={onTrackAction} />
+        </li>
+      ))}
+    </ul>
   );
 }
- 
-// 7. Default export
+
 export default Tracklist;

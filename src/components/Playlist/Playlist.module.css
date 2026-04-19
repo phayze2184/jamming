@@ -1,0 +1,52 @@
+.section {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.nameInput {
+  width: 100%;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text);
+  background: transparent;
+  border-bottom: 2px solid var(--color-border);
+  padding: 0.25rem 0;
+  transition: border-color var(--transition);
+}
+
+.nameInput:focus {
+  border-color: var(--color-accent);
+  outline: none;
+}
+
+.empty {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  padding: 0.5rem 1rem;
+}
+
+.saveButton {
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  width: 100%;
+  background-color: var(--color-accent);
+  color: #000;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition), opacity var(--transition);
+}
+
+.saveButton:hover:not(:disabled) {
+  background-color: var(--color-accent-hover);
+}
+
+.saveButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
