@@ -1,0 +1,85 @@
+/* Design tokens */
+:root {
+  --color-bg:           #0d0d0d;
+  --color-surface:      #1a1a1a;
+  --color-surface-2:    #242424;
+  --color-border:       #2e2e2e;
+  --color-accent:       #1db954;
+  --color-accent-hover: #1ed760;
+  --color-text:         #f0f0f0;
+  --color-text-muted:   #888;
+
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  --transition: 150ms ease;
+}
+
+@supports (color: oklch(0% 0 0)) {
+  :root {
+    --color-bg:           oklch(8% 0 0);
+    --color-surface:      oklch(13% 0 0);
+    --color-surface-2:    oklch(17% 0 0);
+    --color-border:       oklch(21% 0 0);
+    --color-accent:       oklch(68% 0.17 149);
+    --color-accent-hover: oklch(77% 0.18 149);
+    --color-text:         oklch(95% 0 0);
+    --color-text-muted:   oklch(57% 0 0);
+  }
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Base */
+html {
+  font-size: 16px;
+  /* Enable smooth font rendering */
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100dvh;
+  line-height: 1.5;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+input {
+  font: inherit;
+  border: none;
+  outline: none;
+  background: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
