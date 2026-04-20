@@ -4,6 +4,8 @@ Jamming is a React app that lets you search Spotify for tracks, build a custom p
 
 This project uses Vite for local development and the Spotify Web API for search and playlist creation.
 
+You can access the web app [here](https://phayze2184.github.io/jamming/).
+
 ## What It Does
 
 - Search Spotify by song, artist, or album
