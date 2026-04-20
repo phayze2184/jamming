@@ -1,24 +1,28 @@
-// 1. Imports
 import { useState } from 'react';
 import styles from './SearchBar.module.css';
- 
-// 2. Component function
-function SearchBar({ prop1, prop2 }) {
- 
-  // 3. State declarations
-  const [value, setValue] = useState('');
- 
-  // 4. Derived values / computed variables
- 
-  // 5. Event handlers
- 
-  // 6. Return — JSX only, no logic
+
+function SearchBar({ onSearch }) {
+  const [term, setTerm] = useState('');
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    onSearch(term.trim());
+  }
+
   return (
-    <div className={styles.wrapper}>
-      ...
-    </div>
+    <form className={styles.form} onSubmit={handleSubmit}>
+      <input
+        id="search"
+        name="search"
+        className={styles.input}
+        type="text"
+        placeholder="Search for a song, artist, or album..."
+        value={term}
+        onChange={(e) => setTerm(e.target.value)}
+      />
+      <button className={styles.button} type="submit">Search</button>
+    </form>
   );
 }
- 
-// 7. Default export
+
 export default SearchBar;
