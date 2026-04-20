@@ -1,0 +1,52 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  max-height: 70vh;
+}
+
+.title {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 1rem 1.25rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.empty {
+  padding: 2rem 1.25rem;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+/* Scrollable track list */
+.section > :not(.title) {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+
+.section > :not(.title)::-webkit-scrollbar {
+  width: 6px;
+}
+
+.section > :not(.title)::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.section > :not(.title)::-webkit-scrollbar-thumb {
+  background-color: var(--color-border);
+  border-radius: 3px;
+}

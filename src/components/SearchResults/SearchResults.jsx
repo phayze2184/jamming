@@ -1,24 +1,25 @@
-// 1. Imports
-import { useState } from 'react';
+import Tracklist from '../Tracklist/Tracklist';
 import styles from './SearchResults.module.css';
- 
-// 2. Component function
-function SearchResults({ prop1, prop2 }) {
- 
-  // 3. State declarations
-  const [value, setValue] = useState('');
- 
-  // 4. Derived values / computed variables
- 
-  // 5. Event handlers
- 
-  // 6. Return — JSX only, no logic
+
+function SearchResults({ results, onAddTrack, playlistTrackIds }) {
+  const available = results.filter(t => !playlistTrackIds.has(t.id));
+
+  function renderContent() {
+    if (results.length === 0) {
+      return <p className={styles.empty}>Search for music above to get started.</p>;
+    }
+    if (available.length === 0) {
+      return <p className={styles.empty}>All results are already in your playlist.</p>;
+    }
+    return <Tracklist tracks={available} actionLabel="+" onTrackAction={onAddTrack} />;
+  }
+
   return (
-    <div className={styles.wrapper}>
-      ...
-    </div>
+    <section className={styles.section}>
+      <h2 className={styles.title}>Results</h2>
+      {renderContent()}
+    </section>
   );
 }
- 
-// 7. Default export
+
 export default SearchResults;

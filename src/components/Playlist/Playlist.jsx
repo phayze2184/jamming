@@ -1,24 +1,34 @@
-// 1. Imports
-import { useState } from 'react';
+import Tracklist from '../Tracklist/Tracklist';
 import styles from './Playlist.module.css';
- 
-// 2. Component function
-function Playlist({ prop1, prop2 }) {
- 
-  // 3. State declarations
-  const [value, setValue] = useState('');
- 
-  // 4. Derived values / computed variables
- 
-  // 5. Event handlers
- 
-  // 6. Return — JSX only, no logic
+
+function Playlist({ tracks, playlistName, onNameChange, onRemoveTrack, onSave, isSaving }) {
   return (
-    <div className={styles.wrapper}>
-      ...
-    </div>
+    <section className={styles.section}>
+      <input
+        id="playlist-name"
+        name="playlist-name"
+        className={styles.nameInput}
+        type="text"
+        value={playlistName}
+        onChange={(e) => onNameChange(e.target.value)}
+        aria-label="Playlist name"
+        maxLength={100}
+      />
+      <div className={styles.tracklistWrapper}>
+        {tracks.length === 0
+          ? <p className={styles.empty}>Add tracks from the search results.</p>
+          : <Tracklist tracks={tracks} actionLabel="−" onTrackAction={onRemoveTrack} />
+        }
+      </div>
+      <button
+        className={styles.saveButton}
+        onClick={onSave}
+        disabled={tracks.length === 0 || isSaving || !playlistName.trim()}
+      >
+        {isSaving ? 'Saving...' : 'Save to Spotify'}
+      </button>
+    </section>
   );
 }
- 
-// 7. Default export
+
 export default Playlist;
