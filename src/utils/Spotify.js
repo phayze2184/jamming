@@ -1,5 +1,4 @@
 const clientId = 'f1940c49d4984375900d72087ef555e2';
-const redirectUri = 'http://127.0.0.1:3000/';
 const scope = 'playlist-modify-public playlist-modify-private';
 const accountsBaseUrl = 'https://accounts.spotify.com';
 const apiBaseUrl = 'https://api.spotify.com/v1';
@@ -21,6 +20,11 @@ function clearAuthRequestState() { removeStorage(storageKeys.codeVerifier); remo
 function clearAccessToken() { removeStorage(storageKeys.accessToken); removeStorage(storageKeys.tokenExpiry); }
 // Remove Spotify callback query params after we have handled them.
 function clearAuthErrorFromUrl() { window.history.replaceState({}, document.title, window.location.pathname); }
+
+function getRedirectUri() {
+  // Use the current deployed base path so auth works locally and on GitHub Pages.
+  return new URL(import.meta.env.BASE_URL, window.location.origin).toString();
+}
 
 function generateRandomString(length) {
   const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -91,18 +95,30 @@ async function refreshAccessToken(refreshToken) {
 let pendingTokenExchangePromise = null;
 
 async function exchangeCodeForToken(code) {
+  const redirectUri = getRedirectUri();
   // Validate that the callback matches the login request we originally started.
   const verifier = readStorage(storageKeys.codeVerifier);
   const expectedState = readStorage(storageKeys.authState);
   const urlParams = new URLSearchParams(window.location.search);
   const returnedState = urlParams.get('state');
-  if (!verifier) { throw new Error('Missing Spotify PKCE code verifier. Sign in again.'); }
+
+  // If the callback is stale, clear it and start a fresh login instead of trapping the app in an error state.
+  if (!verifier) {
+    clearAuthRequestState();
+    clearAuthErrorFromUrl();
+    await redirectToSpotifyLogin();
+    return '';
+  }
+
   if (expectedState && returnedState !== expectedState) {
     clearAuthRequestState();
-    throw new Error('Spotify authorization state mismatch. Sign in again.');
+    clearAuthErrorFromUrl();
+    await redirectToSpotifyLogin();
+    return '';
   }
+
   // Remove the callback params before any later auth checks run again.
-  window.history.replaceState({}, '', '/');
+  clearAuthErrorFromUrl();
   const data = await apiFetch(`${accountsBaseUrl}/api/token`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -120,6 +136,7 @@ async function exchangeCodeForToken(code) {
 }
 
 async function redirectToSpotifyLogin() {
+  const redirectUri = getRedirectUri();
   // Generate and store the PKCE values needed to verify the callback later.
   const verifier = generateCodeVerifier();
   const challenge = await generateCodeChallenge(verifier);
@@ -202,6 +219,7 @@ const Spotify = {
   async search(term) {
     // Every API call goes through getAccessToken so auth is handled in one place.
     const token = await Spotify.getAccessToken();
+    if (!token) return [];
     const data = await apiFetch(
       `${apiBaseUrl}/search?q=${encodeURIComponent(term)}&type=track`,
       { headers: { Authorization: `Bearer ${token}` } }
